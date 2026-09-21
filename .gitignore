@@ -1,0 +1,45 @@
+# Python (app/backend)
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+*.egg-info/
+
+# Node / Vite / React (app/frontend)
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+
+# SQLite (dev DBs live outside git; seed regenerates)
+*.db
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Env / secrets (keep .env.example tracked)
+.env
+.env.*
+!.env.example
+
+# Docker local overrides (keep Dockerfiles + compose tracked)
+docker-compose.override.yml
+
+# Logs / OS / IDE
+*.log
+logs/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
