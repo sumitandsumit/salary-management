@@ -45,6 +45,9 @@ class RateRepository:
         stmt = select(ExchangeRate)
         return list(self.db.execute(stmt).scalars().all())
 
+    def get(self, code: str) -> ExchangeRate | None:
+        return self.db.get(ExchangeRate, code.upper())
+
     def upsert(
         self, code: str, rate: Decimal, day: date, source: str = "admin"
     ) -> ExchangeRate:

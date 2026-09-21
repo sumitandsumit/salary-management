@@ -1,6 +1,6 @@
 // Typed API client. Base URL from VITE_API_URL (default localhost).
 
-import type { AnalyticsSummary, Employee, EmployeeList } from './types';
+import type { AnalyticsSummary, Employee, EmployeeList, Rate } from './types';
 
 const BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000';
 
@@ -73,4 +73,15 @@ export function fetchSummary(q: { dept?: string; country?: string } = {}) {
   if (q.country) params.set('country', q.country);
   const suffix = params.toString() ? `?${params.toString()}` : '';
   return request<AnalyticsSummary>(`/analytics/summary${suffix}`);
+}
+
+export function listRates(): Promise<Rate[]> {
+  return request<Rate[]>('/rates');
+}
+
+export function updateRate(code: string, rate_to_usd: number, effective_date: string, reason?: string) {
+  return request<Rate>(`/rates/${code}`, {
+    method: 'PUT',
+    body: JSON.stringify({ rate_to_usd, effective_date, reason }),
+  });
 }

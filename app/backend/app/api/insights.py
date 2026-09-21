@@ -5,11 +5,16 @@ from decimal import Decimal
 
 from app.core.deps import get_db, require_hr
 from app.repositories.employee_repo import EmployeeRepository
-from app.repositories.meta_repo import RateRepository
-from app.schemas.analytics import AnalyticsSummary, RateRead, RateRefresh
+from app.repositories.meta_repo import AuditRepository, RateRepository
+from app.schemas.analytics import (
+    AnalyticsSummary,
+    RateRead,
+    RateRefresh,
+    RateUpdate,
+)
 from app.services.analytics_service import AnalyticsService
 from app.services.fx_service import StaticFxService
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 router = APIRouter(tags=["insights"])
@@ -55,3 +60,32 @@ def refresh_rates(
         repo.upsert(code, Decimal(rate), body.effective_date)
     db.commit()
     return repo.all()
+
+
+@router.put("/rates/{code}", response_model=RateRead)
+def update_rate(
+    code: str,
+    body: RateUpdate,
+    db: Session = Depends(get_db),
+    actor: dict = Depends(require_hr),
+):
+    """Edit a single currency rate. Creation stays in POST /rates/refresh."""
+    if len(code) != 3 or not code.isalpha():
+        raise HTTPException(422, "currency code must be 3 letters (ISO-4217)")
+    repo = RateRepository(db)
+    row = repo.get(code)
+    if row is None:
+        raise HTTPException(404, f"unknown currency: {code.upper()}")
+    old = {"rate_to_usd": str(row.rate_to_usd), "effective_date": str(row.effective_date)}
+    updated = repo.upsert(code, Decimal(body.rate_to_usd), body.effective_date)
+    AuditRepository(db).record(
+        actor["id"],
+        "rate_update",
+        "exchange_rate",
+        updated.currency_code,
+        old,
+        {"rate_to_usd": str(updated.rate_to_usd), "effective_date": str(updated.effective_date)},
+        body.reason,
+    )
+    db.commit()
+    return updated

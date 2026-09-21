@@ -24,6 +24,12 @@ export function Layout() {
           to="/employees"
           active={pathname.startsWith('/employees')}
         />
+        <NavLink
+          label="Exchange rates"
+          component={Link}
+          to="/rates"
+          active={pathname.startsWith('/rates')}
+        />
       </AppShell.Navbar>
       <AppShell.Main>
         <Outlet />

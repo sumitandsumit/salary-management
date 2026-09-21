@@ -3,7 +3,7 @@
 from datetime import date
 from decimal import Decimal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class BucketCount(BaseModel):
@@ -33,6 +33,8 @@ class AnalyticsSummary(BaseModel):
 
 
 class RateRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     currency_code: str
     rate_to_usd: Decimal
     effective_date: date
@@ -41,3 +43,9 @@ class RateRead(BaseModel):
 class RateRefresh(BaseModel):
     rates: dict[str, Decimal] = Field(description="code -> rate_to_usd")
     effective_date: date
+
+
+class RateUpdate(BaseModel):
+    rate_to_usd: Decimal = Field(gt=0, max_digits=18, decimal_places=6)
+    effective_date: date
+    reason: str | None = Field(default=None, max_length=500)

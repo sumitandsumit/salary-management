@@ -41,3 +41,9 @@ export interface AnalyticsSummary {
   distribution: { label: string; count: number }[];
   rate_date: string | null;
 }
+
+export interface Rate {
+  currency_code: string;
+  rate_to_usd: string;
+  effective_date: string;
+}

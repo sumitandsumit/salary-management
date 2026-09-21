@@ -70,3 +70,32 @@ def test_list_pagination_and_analytics(client):
     assert body["headcount"] == 2
     assert body["total_usd"] is not None
     assert len(body["distribution"]) == 4
+
+
+def test_edit_single_exchange_rate(client):
+    refresh = client.post(
+        "/rates/refresh",
+        json={"rates": {"INR": "0.012"}, "effective_date": "2026-01-01"},
+    )
+    assert refresh.status_code == 200, refresh.text
+
+    updated = client.put(
+        "/rates/inr",
+        json={"rate_to_usd": "0.013", "effective_date": "2026-02-01",
+              "reason": "RBI revision"},
+    )
+    assert updated.status_code == 200, updated.text
+    body = updated.json()
+    assert body["currency_code"] == "INR"
+    assert body["rate_to_usd"] == "0.013000"
+
+    listed = client.get("/rates")
+    assert listed.status_code == 200
+    assert any(r["currency_code"] == "INR" for r in listed.json())
+
+    assert client.put("/rates/xx",
+                      json={"rate_to_usd": "1",
+                            "effective_date": "2026-02-01"}).status_code == 422
+    assert client.put("/rates/ZZZ",
+                      json={"rate_to_usd": "1",
+                            "effective_date": "2026-02-01"}).status_code == 404
