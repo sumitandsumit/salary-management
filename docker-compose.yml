@@ -1,0 +1,40 @@
+name: acme-salary
+
+services:
+  seed:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    environment:
+      SALARY_DATABASE_URL: "sqlite:////data/salary.db"
+    volumes:
+      - salary-data:/data
+    command: ["python", "-m", "app.seed.seed", "--count", "10000"]
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      SALARY_DATABASE_URL: "sqlite:////data/salary.db"
+    volumes:
+      - salary-data:/data
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_URL: "http://localhost:8000"
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+
+volumes:
+  salary-data: {}
