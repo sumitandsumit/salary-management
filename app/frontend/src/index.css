@@ -29,7 +29,7 @@
 
 /* === Animations === */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
@@ -37,16 +37,16 @@
   to   { opacity: 1; }
 }
 @keyframes slideIn {
-  from { opacity: 0; transform: translateX(-12px); }
+  from { opacity: 0; transform: translateX(-18px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.96); }
+  from { opacity: 0; transform: scale(0.95); }
   to   { opacity: 1; transform: scale(1); }
 }
 @keyframes pulse {
   0%, 100% { opacity: 1; }
-  50%      { opacity: 0.55; }
+  50%      { opacity: 0.5; }
 }
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
@@ -54,16 +54,16 @@
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.5s ease-out both;
+  animation: fadeInUp 0.6s ease-out both;
 }
 .animate-fade-in {
-  animation: fadeIn 0.4s ease-out both;
+  animation: fadeIn 0.5s ease-out both;
 }
 .animate-scale-in {
-  animation: scaleIn 0.35s ease-out both;
+  animation: scaleIn 0.4s ease-out both;
 }
 .animate-slide-in {
-  animation: slideIn 0.4s ease-out both;
+  animation: slideIn 0.5s ease-out both;
 }
 .animate-pulse {
   animation: pulse 1.6s ease-in-out infinite;
@@ -71,60 +71,60 @@
 
 /* === Cards: hover lift + shadow transition === */
 .card-lift {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card-lift:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
   box-shadow: var(--shadow-hover);
 }
 
 /* === Table rows: hover highlight === */
 .row-hover tr:hover {
-  background-color: rgba(170, 59, 255, 0.04);
+  background-color: rgba(170, 59, 255, 0.06);
 }
 .row-hover tr {
-  transition: background-color 0.2s ease;
+  transition: background-color 0.25s ease;
 }
 
 /* === Buttons: press feedback === */
 .btn-press {
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .btn-press:active {
-  transform: scale(0.96);
+  transform: scale(0.95);
 }
 
 /* === Loading shimmer === */
 .shimmer {
   background: linear-gradient(90deg,
-    rgba(0,0,0,0.04) 25%,
-    rgba(0,0,0,0.08) 50%,
-    rgba(0,0,0,0.04) 75%);
+    rgba(0,0,0,0.05) 25%,
+    rgba(0,0,0,0.1) 50%,
+    rgba(0,0,0,0.05) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.8s ease-in-out infinite;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 /* === Layout spacing === */
 .page-shell {
-  padding: 24px 32px;
+  padding: 32px 48px;
   max-width: 1280px;
   margin: 0 auto;
 }
 .page-title {
-  margin-bottom: 8px !important;
+  margin-bottom: 4px !important;
 }
 .page-subtitle {
-  margin-bottom: 24px !important;
+  margin-bottom: 32px !important;
   color: var(--text);
 }
 
 /* === Card list spacing === */
 .kpi-grid {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 .section-gap {
-  margin-top: 24px;
+  margin-top: 32px;
 }
 
 /* === Status badge color === */
@@ -146,12 +146,12 @@
       rgba(0, 0, 0, 0.5) 0 20px 25px -5px, rgba(0, 0, 0, 0.35) 0 8px 10px -6px;
   }
   .row-hover tr:hover {
-    background-color: rgba(170, 59, 255, 0.07);
+    background-color: rgba(170, 59, 255, 0.09);
   }
   .shimmer {
     background: linear-gradient(90deg,
-      rgba(255,255,255,0.04) 25%,
-      rgba(255,255,255,0.08) 50%,
-      rgba(255,255,255,0.04) 75%);
+      rgba(255,255,255,0.05) 25%,
+      rgba(255,255,255,0.1) 50%,
+      rgba(255,255,255,0.05) 75%);
   }
 }

@@ -1,3 +1,4 @@
+import './index.css';
 import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';

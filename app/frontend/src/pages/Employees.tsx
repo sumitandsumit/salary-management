@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   Badge,
   Button,
+  Container,
   Group,
   Modal,
   NumberInput,
@@ -75,37 +76,43 @@ export function Employees() {
   }
 
   return (
-      <div className="page-shell">
-      <Title order={3} className="page-title">Employees</Title>
-      <Text size="sm" c="dimmed" className="page-subtitle">
+    <Container size="xl" py="xl">
+      <Title order={2} mb="xs">Employees</Title>
+      <Text size="sm" c="dimmed" mb="xl">
         {total} employees across countries — search, filter, or edit below.
       </Text>
 
-      <Group mb="md" grow>
+      <Group mb="lg" grow>
         <TextInput
           placeholder="Search name/email"
           value={search}
           onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-          className="btn-press"
+          mb="0"
         />
         <TextInput
           placeholder="Dept (e.g. Eng)"
           value={dept}
           onChange={(e) => { setDept(e.target.value); setPage(1); }}
-          className="btn-press"
+          mb="0"
         />
         <TextInput
           placeholder="Country (e.g. IN)"
           value={country}
           onChange={(e) => { setCountry(e.target.value.toUpperCase()); setPage(1); }}
-          className="btn-press"
+          mb="0"
         />
         <EmployeeCreateModal onCreated={reload} />
       </Group>
 
-      {!loaded && <div className="shimmer" style={{ height: 240 }} />}
+      {!loaded && <div className="shimmer" style={{ height: 260 }} />}
 
-      <Table striped withTableBorder className="row-hover">
+      <Table
+        striped
+        withTableBorder
+        className="row-hover"
+        mb="xl"
+        layout="fixed"
+      >
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Name</Table.Th><Table.Th>Email</Table.Th><Table.Th>Dept</Table.Th>
@@ -114,7 +121,7 @@ export function Employees() {
         </Table.Thead>
         <Table.Tbody>
           {rows.map((r, i) => (
-            <Table.Tr key={r.id} className="animate-slide-in" style={{ animationDelay: `${i * 30}ms` }}>
+            <Table.Tr key={r.id} className="animate-slide-in" style={{ animationDelay: `${i * 50}ms`, animationFillMode: 'both' }}>
               <Table.Td>{r.name}</Table.Td>
               <Table.Td>{r.email}</Table.Td>
               <Table.Td>{r.department}</Table.Td>
@@ -128,7 +135,7 @@ export function Employees() {
                 </Badge>
               </Table.Td>
               <Table.Td>
-                <Group gap="xs">
+                <Group gap="sm">
                   <Button size="sm" variant="light" className="btn-press" onClick={() => setEditRow(r)}>Edit</Button>
                   <Button size="sm" variant="light" className="btn-press" onClick={() => setIncRow(r)}>+%</Button>
                   <Button size="sm" variant="subtle" color="red" className="btn-press" onClick={() => void onDeactivate(r)}>Offboard</Button>
@@ -139,17 +146,17 @@ export function Employees() {
         </Table.Tbody>
       </Table>
 
-      <Pagination mt="md" value={page} onChange={setPage} total={Math.max(1, Math.ceil(total / PAGE_SIZE))} />
+      <Pagination mb="xl" value={page} onChange={setPage} total={Math.max(1, Math.ceil(total / PAGE_SIZE))} />
 
-      <Modal opened={editRow !== null} onClose={() => setEditRow(null)} title="Edit employee">
+      <Modal opened={editRow !== null} onClose={() => setEditRow(null)} title="Edit employee" size="md">
         <EditForm row={editRow} onSaved={() => { setEditRow(null); reload(); }} />
       </Modal>
-      <Modal opened={incRow !== null} onClose={() => setIncRow(null)} title={`Increment — ${incRow?.name ?? ''}`}>
+      <Modal opened={incRow !== null} onClose={() => setIncRow(null)} title={`Increment — ${incRow?.name ?? ''}`} size="md">
         <NumberInput label="Percent (0–100)" value={percent} onChange={(v) => setPercent(typeof v === 'number' ? v : Number(v) || 0)} min={0} max={100} />
         <TextInput label="Reason" value={reason} onChange={(e) => setReason(e.target.value)} mt="sm" />
         <Button mt="md" className="btn-press" onClick={() => void onIncrement()}>Apply</Button>
       </Modal>
-    </div>
+    </Container>
   );
 }
 
