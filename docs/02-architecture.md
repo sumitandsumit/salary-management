@@ -84,5 +84,5 @@ pro/                    <- GitHub root, build context
   Dockerfile.backend Dockerfile.frontend docker-compose.yml
 ```
 
-Seams: `TODO(history/bulk-csv/fx-live/auth)` + repository/DB seams keep
+Seams: `TODO(history/bulk-csv/fx-live/auth/money-transfer/excel-import)` + repository/DB seams keep
 every direction extensible. Details: `03-tradeoffs-performance.md`.
