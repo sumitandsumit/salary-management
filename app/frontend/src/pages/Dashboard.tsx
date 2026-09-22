@@ -94,7 +94,7 @@ export function Dashboard() {
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
-                {data.top_earners.slice(0, 8).map((t, i) => (
+                {data.top_earners.slice(0, 5).map((t, i) => (
                   <Table.Tr key={t.id} className="animate-slide-in" style={{ animationDelay: `${i * 60}ms`, animationFillMode: 'both' }}>
                     <Table.Td>{t.name}</Table.Td>
                     <Table.Td>{t.department}</Table.Td>

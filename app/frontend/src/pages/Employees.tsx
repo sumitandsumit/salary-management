@@ -115,27 +115,24 @@ export function Employees() {
       >
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Name</Table.Th><Table.Th>Email</Table.Th><Table.Th>Dept</Table.Th>
-            <Table.Th>Salary</Table.Th><Table.Th>Status</Table.Th><Table.Th>Actions</Table.Th>
+            <Table.Th style={{ width: '22%' }}>Name</Table.Th>
+            <Table.Th style={{ width: '22%' }}>Email</Table.Th>
+            <Table.Th style={{ width: '15%' }}>Dept</Table.Th>
+            <Table.Th style={{ width: '16%' }}>Salary</Table.Th>
+            <Table.Th style={{ width: '10%' }}>Status</Table.Th>
+            <Table.Th style={{ width: '15%' }}>Actions</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
           {rows.map((r, i) => (
             <Table.Tr key={r.id} className="animate-slide-in" style={{ animationDelay: `${i * 50}ms`, animationFillMode: 'both' }}>
-              <Table.Td>{r.name}</Table.Td>
-              <Table.Td>{r.email}</Table.Td>
+              <Table.Td style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.name}</Table.Td>
+              <Table.Td style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.email}</Table.Td>
               <Table.Td>{r.department}</Table.Td>
               <Table.Td>{r.base_salary} {r.currency}</Table.Td>
+              <Table.Td><Badge color={r.status === 'active' ? 'green' : 'red'} variant="light">{r.status}</Badge></Table.Td>
               <Table.Td>
-                <Badge
-                  color={r.status === 'active' ? 'green' : 'red'}
-                  variant="light"
-                >
-                  {r.status}
-                </Badge>
-              </Table.Td>
-              <Table.Td>
-                <Group gap="sm">
+                <Group gap="xs" style={{ flexWrap: 'nowrap', whiteSpace: 'nowrap' }}>
                   <Button size="sm" variant="light" className="btn-press" onClick={() => setEditRow(r)}>Edit</Button>
                   <Button size="sm" variant="light" className="btn-press" onClick={() => setIncRow(r)}>+%</Button>
                   <Button size="sm" variant="subtle" color="red" className="btn-press" onClick={() => void onDeactivate(r)}>Offboard</Button>
