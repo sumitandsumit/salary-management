@@ -1,6 +1,6 @@
-import { AppShell, Burger, Group, NavLink, Title } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { AppShell, Burger, Group, NavLink, Title } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 export function Layout() {
   const [opened, { toggle }] = useDisclosure(false);
@@ -8,7 +8,7 @@ export function Layout() {
   return (
     <AppShell
       header={{ height: 56 }}
-      navbar={{ width: 220, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      navbar={{ width: 220, breakpoint: "sm", collapsed: { mobile: !opened } }}
     >
       <AppShell.Header>
         <Group h="100%" px="md">
@@ -17,18 +17,23 @@ export function Layout() {
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        <NavLink label="Dashboard" component={Link} to="/" active={pathname === '/'} />
+        <NavLink
+          label="Dashboard"
+          component={Link}
+          to="/"
+          active={pathname === "/"}
+        />
         <NavLink
           label="Employees"
           component={Link}
           to="/employees"
-          active={pathname.startsWith('/employees')}
+          active={pathname.startsWith("/employees")}
         />
         <NavLink
           label="Exchange rates"
           component={Link}
           to="/rates"
-          active={pathname.startsWith('/rates')}
+          active={pathname.startsWith("/rates")}
         />
       </AppShell.Navbar>
       <AppShell.Main>
