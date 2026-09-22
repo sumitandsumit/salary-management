@@ -50,5 +50,3 @@ pro/                        <- GitHub root
   Dockerfile.backend Dockerfile.frontend docker-compose.yml
   README.md .gitignore
 ```
-
-Only `pro/` is pushed to GitHub. Personal/scratch stays in `../local/`.
