@@ -13,6 +13,7 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
+import { IconPencil, IconPlayerPlay, IconPlayerPause, IconArrowNarrowUp } from '@tabler/icons-react';
 import { useDebouncedValue } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import {
@@ -65,10 +66,15 @@ export function Employees() {
     }
   }
 
-  async function onDeactivate(row: Employee) {
+  async function onToggleStatus(row: Employee) {
     try {
-      await deactivateEmployee(row.id);
-      notifications.show({ message: `${row.name} deactivated` });
+      if (row.status === 'active') {
+        await deactivateEmployee(row.id);
+        notifications.show({ message: `${row.name} deactivated` });
+      } else {
+        await updateEmployee(row.id, { status: 'active' });
+        notifications.show({ color: 'green', message: `${row.name} activated` });
+      }
       reload();
     } catch (e) {
       notifications.show({ color: 'red', message: (e as Error).message });
@@ -133,9 +139,21 @@ export function Employees() {
               <Table.Td><Badge color={r.status === 'active' ? 'green' : 'red'} variant="light">{r.status}</Badge></Table.Td>
               <Table.Td>
                 <Group gap="xs" style={{ flexWrap: 'nowrap', whiteSpace: 'nowrap' }}>
-                  <Button size="sm" variant="light" className="btn-press" onClick={() => setEditRow(r)}>Edit</Button>
-                  <Button size="sm" variant="light" className="btn-press" onClick={() => setIncRow(r)}>+%</Button>
-                  <Button size="sm" variant="subtle" color="red" className="btn-press" onClick={() => void onDeactivate(r)}>Offboard</Button>
+                  <Button size="sm" variant="light" className="btn-press" onClick={() => setEditRow(r)}>
+                    <IconPencil size={16} />
+                  </Button>
+                  <Button size="sm" variant="light" className="btn-press" onClick={() => setIncRow(r)}>
+                    <IconArrowNarrowUp size={16} />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={r.status === 'active' ? 'subtle' : 'light'}
+                    color={r.status === 'active' ? 'red' : 'green'}
+                    className="btn-press"
+                    onClick={() => void onToggleStatus(r)}
+                  >
+                    {r.status === 'active' ? <IconPlayerPause size={16} /> : <IconPlayerPlay size={16} />}
+                  </Button>
                 </Group>
               </Table.Td>
             </Table.Tr>
